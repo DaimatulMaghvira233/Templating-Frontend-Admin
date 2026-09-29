@@ -43,6 +43,12 @@
               <span>Dashboard</span>
             </a>
           </li>
+          <li class="sidebar-menu-item">
+            <a href="{{ route('admin.produk') }}" class="sidebar-menu-link" id="menu-produk" title="Produk">
+              <i class="bi bi-box-seam"></i>
+              <span>Produk</span>
+            </a>
+          </li>
         </ul>
       </div>
 
