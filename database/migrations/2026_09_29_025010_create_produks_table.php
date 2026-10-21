@@ -8,6 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->string('nama_produk');
@@ -15,6 +16,7 @@ return new class extends Migration
             $table->decimal('harga', 10, 2);
             $table->integer('stok')->default(0);
             $table->timestamps();
+            $table->string('image')->nullable();
         });
     }
 

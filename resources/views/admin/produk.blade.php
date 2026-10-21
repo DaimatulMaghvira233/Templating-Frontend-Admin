@@ -78,57 +78,65 @@
     </div>
 
     <div class="row g-4">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">Daftar Produk Furniture</h2>
-        <a href="{{ route('admin.produk.create') }}" class="btn btn-dark">
-          <i class="bi bi-plus-lg"></i> Tambah Produk
-        </a>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Daftar Produk Furniture</h2>
+            <a href="{{ route('admin.produk.create') }}" class="btn btn-dark">
+              <i class="bi bi-plus-lg"></i> Tambah Produk
+            </a>
+          </div>
+
+          @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+          @endif
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Gambar</th>
+                <th>Nama Produk</th>
+                <th>Deskripsi</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse ($produk as $index => $item)
+                <tr>
+                  <td>{{ $index + 1 }}</td>
+                  <td>
+                    @if ($item->image)
+                      <img src="{{ asset('storage/' . $item->image) }}" width="80" class="rounded" alt="{{ $item->nama_produk }}">
+                    @else
+                      <span class="text-muted">-</span>
+                    @endif
+                  </td>
+                  <td>{{ $item->nama_produk }}</td>
+                  <td>{{ $item->deskripsi }}</td>
+                  <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                  <td>{{ $item->stok }}</td>
+                  <td>
+                    <a href="{{ route('admin.produk.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ route('admin.produk.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus produk ini?')">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                    </form>
+                  </td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="7">Belum ada data produk.</td>
+                </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
       </div>
-
-      @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-      @endif
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nama Produk</th>
-            <th>Deskripsi</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          @forelse ($produk as $index => $item)
-            <tr>
-              <td>{{ $index + 1 }}</td>
-              <td>{{ $item->nama_produk }}</td>
-              <td>{{ $item->deskripsi }}</td>
-              <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
-              <td>{{ $item->stok }}</td>
-              <td>
-                <a href="{{ route('admin.produk.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                <form action="{{ route('admin.produk.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus produk ini?')">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                </form>
-              </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="6">Belum ada data produk.</td>
-            </tr>
-          @endforelse
-        </tbody>
-      </table>
     </div>
-  </div>
-</div>
 
   </div>
 

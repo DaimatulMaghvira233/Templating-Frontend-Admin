@@ -67,7 +67,7 @@
             </div>
           @endif
 
-          <form action="{{ route('admin.produk.update', $produk->id) }}" method="POST">
+          <form action="{{ route('admin.produk.update', $produk->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -89,6 +89,17 @@
             <div class="mb-3">
               <label class="form-label">Stok</label>
               <input type="number" name="stok" class="form-control" value="{{ old('stok', $produk->stok) }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gambar</label>
+              @if ($produk->image)
+                <div class="mb-2">
+                  <img src="{{ asset('storage/' . $produk->image) }}" width="120" class="rounded" alt="{{ $produk->nama_produk }}">
+                </div>
+              @endif
+              <input type="file" name="image" class="form-control" accept="image/*">
+              <small class="text-muted">Kosongkan jika tidak ingin mengganti gambar. Format jpg, jpeg, png, webp. Maksimal 2 MB.</small>
             </div>
 
             <button type="submit" class="btn btn-dark">Update</button>

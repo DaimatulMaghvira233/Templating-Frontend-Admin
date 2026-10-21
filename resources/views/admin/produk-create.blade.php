@@ -67,7 +67,7 @@
             </div>
           @endif
 
-          <form action="{{ route('admin.produk.store') }}" method="POST">
+          <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -88,6 +88,12 @@
             <div class="mb-3">
               <label class="form-label">Stok</label>
               <input type="number" name="stok" class="form-control" value="{{ old('stok') }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gambar</label>
+              <input type="file" name="image" class="form-control" accept="image/*">
+              <small class="text-muted">Format jpg, jpeg, png, webp. Maksimal 2 MB.</small>
             </div>
 
             <button type="submit" class="btn btn-dark">Simpan</button>
