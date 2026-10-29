@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\OrderController;
 
 // Halaman frontend (home)
 Route::get('/', function () {
@@ -32,3 +33,5 @@ Route::post('/admin/produk', [ProdukController::class, 'store'])->name('admin.pr
 Route::get('/admin/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('admin.produk.edit');
 Route::put('/admin/produk/{produk}', [ProdukController::class, 'update'])->name('admin.produk.update');
 Route::delete('/admin/produk/{produk}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
+Route::get('/admin/produk/invoice', [ProdukController::class, 'invoice'])->name('admin.produk.invoice');
+Route::get('orders/{order}/invoice', [OrderController::class, 'invoice'])->name('orders.invoice');
