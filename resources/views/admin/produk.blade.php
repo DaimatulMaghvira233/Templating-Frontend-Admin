@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spark Admin - Produk</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  @vite(['resources/js/app.js'])
   <link rel="icon" type="image/png" href="{{ asset('admin-assets/assets/images/favicon.ico') }}">
   <link rel="stylesheet" href="{{ asset('admin-assets/assets/libs/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin-assets/assets/libs/bootstrap-icons/bootstrap-icons.css') }}">
@@ -125,6 +127,13 @@
                       @method('DELETE')
                       <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                     </form>
+
+                    <form action="{{ route('orders.store') }}" method="POST" class="d-inline">
+                      @csrf
+                      <input type="hidden" name="produk_id" value="{{ $item->id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button type="submit" class="btn btn-sm btn-success">Pesan</button>
+                    </form>
                   </td>
                 </tr>
               @empty
@@ -141,6 +150,17 @@
   </div>
 
   <script src="{{ asset('admin-assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.Echo.private('user.{{ auth()->id() }}')
+      .listen('.order.placed', (e) => {
+        alert(`Order #${e.order_id} telah ditempatkan! Total: Rp ${e.total}`);
+        console.log('Order Placed:', e);
+      });
+  });
+</script>
+
 </body>
 
 </html>

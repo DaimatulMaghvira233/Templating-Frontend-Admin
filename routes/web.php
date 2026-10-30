@@ -4,6 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\OrderController;
+use Illuminate\Support\Facades\Auth;
+
+//login sementara untuk pengujian
+Route::get('/masuk-test', function () {
+    Auth::loginUsingId(1);
+    return redirect()->route('admin.produk');
+});
 
 // Halaman frontend (home)
 Route::get('/', function () {
@@ -35,3 +42,5 @@ Route::put('/admin/produk/{produk}', [ProdukController::class, 'update'])->name(
 Route::delete('/admin/produk/{produk}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
 Route::get('/admin/produk/invoice', [ProdukController::class, 'invoice'])->name('admin.produk.invoice');
 Route::get('orders/{order}/invoice', [OrderController::class, 'invoice'])->name('orders.invoice');
+Route::post('orders', [OrderController::class, 'store'])->middleware('auth')->name('orders.store');
+
