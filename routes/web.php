@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ReceiptController;
 
 //login sementara untuk pengujian
 Route::get('/masuk-test', function () {
@@ -43,4 +44,4 @@ Route::delete('/admin/produk/{produk}', [ProdukController::class, 'destroy'])->n
 Route::get('/admin/produk/invoice', [ProdukController::class, 'invoice'])->name('admin.produk.invoice');
 Route::get('orders/{order}/invoice', [OrderController::class, 'invoice'])->name('orders.invoice');
 Route::post('orders', [OrderController::class, 'store'])->middleware('auth')->name('orders.store');
-
+Route::get('/print-receipt', [ReceiptController::class, 'print']);
